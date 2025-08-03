@@ -1,0 +1,57 @@
+# === Configuration Files / Pliki Konfiguracyjne ===
+# NEVER commit the main configuration file with your secrets.
+# NIGDY nie dodawaj do repozytorium głównego pliku konfiguracyjnego z sekretami.
+config.yaml
+
+# Google Cloud credentials
+# Dane uwierzytelniające Google Cloud
+client_secret.json
+token.json
+
+# === Python ===
+# Virtual environment folders
+# Foldery środowiska wirtualnego
+.venv/
+venv/
+env/
+
+# Python cache
+# Pamięć podręczna Pythona
+__pycache__/
+*.pyc
+
+# === Terraform ===
+# Local Terraform directories and state files
+# Lokalne katalogi i pliki stanu Terraform
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.d/
+terraform.tfstate.backup
+
+# === Certificates & Keys ===
+# Generated certificates, keys, and VPN configurations
+# Wygenerowane certyfikaty, klucze i konfiguracje VPN
+gcp_tak_certs/
+*.p12
+*.cer
+*.key
+*.pem
+
+# === Generated Files & Logs ===
+# Temporary files, logs, and build artifacts
+# Pliki tymczasowe, logi i artefakty kompilacji
+*.log
+*.tmp
+*.zip
+*.png
+
+# Bundled project file
+# Spakowany plik projektu
+codebase_bundle.txt
+
+# === IDE & OS specific ===
+# Pliki specyficzne dla IDE i systemu operacyjnego
+.idea/
+.vscode/
+.DS_Store

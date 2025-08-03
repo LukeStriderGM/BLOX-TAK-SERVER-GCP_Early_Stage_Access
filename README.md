@@ -61,6 +61,8 @@ To use these scripts, you will need the following on your **local admin machine*
 3.  **Terraform**: The Terraform CLI installed.
 4.  **YubiKey (or other FIDO/U2F key)**: A hardware security key for generating your `ed25519-sk` SSH key. **This is not optional.**
 5.  **Python 3 & Dependencies**.
+6.  **Ubuntu 22.04 LTS**.
+
 
 <details>
 
@@ -75,6 +77,7 @@ Do użycia tych skryptów potrzebne będą następujące elementy na Twojej **lo
 3.  **Terraform**: Zainstalowany interfejs CLI Terraform.
 4.  **YubiKey (lub inny klucz FIDO/U2F)**: Sprzętowy klucz bezpieczeństwa do wygenerowania Twojego klucza SSH `ed25519-sk`. **To nie jest opcjonalne.**
 5.  **Python 3 i Zależności**.
+6.  **Ubuntu 22.04 LTS**.
 
 </details>
 
@@ -99,16 +102,16 @@ This initial step covers everything you need to do on your **local admin machine
 2.  **Install Google Cloud CLI**:
     * Add the gcloud CLI package source and install the command-line tool.
         ```bash
-        curl -fsSL [https://packages.cloud.google.com/apt/doc/apt-key.gpg](https://packages.cloud.google.com/apt/doc/apt-key.gpg) | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
-        echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] [https://packages.cloud.google.com/apt](https://packages.cloud.google.com/apt) cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
+        curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
+        echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
         sudo apt-get update && sudo apt-get install -y google-cloud-cli
         ```
 
 3.  **Install Terraform**:
     * Add the HashiCorp repository and install Terraform.
         ```bash
-        sudo curl -fsSL [https://apt.releases.hashicorp.com/gpg](https://apt.releases.hashicorp.com/gpg) | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] [https://apt.releases.hashicorp.com](https://apt.releases.hashicorp.com) $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+        sudo curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
         sudo apt-get update && sudo apt-get install -y terraform
         ```
 
@@ -117,19 +120,30 @@ This initial step covers everything you need to do on your **local admin machine
         ```bash
         # Log in to your Google Account (will open a browser)
         gcloud auth login
-
+        ```
+        
+        ```bash 
         # Set your target GCP Project ID
         gcloud config set project <YOUR_PROJECT_ID>
+        ````
 
+        ```bash
         # Generate a new security key-backed SSH key
         ssh-keygen -t ed25519-sk -C "your_email@example.com"
         ```
 
-5.  **Clone Repository & Install Python Dependencies**:
+5.  **Clone Repository & Install Python Dependencies**
+
+    * If you don't have it configured - first:
+        ```bash
+        sudo apt install gh
+        gh auth login
+        ```
+
     * Finally, clone the project repository and install the required Python packages.
         ```bash
-        git clone <URL_TO_THIS_PRIVATE_REPOSITORY>
-        cd BLOX-TAK-SERVER-GCP
+        git clone https://github.com/LukeStriderGM/BLOX-TAK-SERVER-GCP_Early_Stage_Access
+        cd BLOX-TAK-SERVER-GCP_Early_Stage_Access
         pip install -r requirements.txt
         ```
 
@@ -178,16 +192,16 @@ Ten początkowy krok obejmuje wszystko, co musisz zrobić na swojej **lokalnej m
 2.  **Zainstaluj Google Cloud CLI**:
     * Dodaj źródło pakietów gcloud CLI i zainstaluj narzędzie wiersza poleceń.
         ```bash
-        curl -fsSL [https://packages.cloud.google.com/apt/doc/apt-key.gpg](https://packages.cloud.google.com/apt/doc/apt-key.gpg) | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
-        echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] [https://packages.cloud.google.com/apt](https://packages.cloud.google.com/apt) cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
+        curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
+        echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
         sudo apt-get update && sudo apt-get install -y google-cloud-cli
         ```
 
 3.  **Zainstaluj Terraform**:
     * Dodaj repozytorium HashiCorp i zainstaluj Terraform.
         ```bash
-        sudo curl -fsSL [https://apt.releases.hashicorp.com/gpg](https://apt.releases.hashicorp.com/gpg) | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] [https://apt.releases.hashicorp.com](https://apt.releases.hashicorp.com) $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+        sudo curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
         sudo apt-get update && sudo apt-get install -y terraform
         ```
 
@@ -196,19 +210,30 @@ Ten początkowy krok obejmuje wszystko, co musisz zrobić na swojej **lokalnej m
         ```bash
         # Zaloguj się na swoje konto Google (otworzy się przeglądarka)
         gcloud auth login
-
+        ```
+        
+        ```bash
         # Ustaw docelowy identyfikator projektu GCP
         gcloud config set project <TWÓJ_PROJECT_ID>
-
+        ```
+   
+        ```bash
         # Wygeneruj nowy klucz SSH oparty na kluczu bezpieczeństwa
         ssh-keygen -t ed25519-sk -C "twoj_email@example.com"
         ```
 
-5.  **Sklonuj Repozytorium i Zainstaluj Zależności Python**:
+5.  **Sklonuj Repozytorium i Zainstaluj Zależności Python**
+    
+    * Jeśli nie masz skonfigurowane - najpierw:
+        ```bash
+        sudo apt install gh
+        gh auth login
+        ```
+    
     * Na koniec sklonuj repozytorium projektu i zainstaluj wymagane pakiety Python.
         ```bash
-        git clone <URL_DO_TEGO_PRYWATNEGO_REPOZYTORIUM>
-        cd BLOX-TAK-SERVER-GCP
+        git clone https://github.com/LukeStriderGM/BLOX-TAK-SERVER-GCP_Early_Stage_Access
+        cd BLOX-TAK-SERVER-GCP_Early_Stage_Access
         pip install -r requirements.txt
         ```
 
@@ -251,9 +276,15 @@ This script uses Terraform to create the VM, sets up a dedicated user, and adds 
 # Initialize Terraform
 terraform init
 
+# After this step, enter your variables into config.yaml
+cp config-example.yaml config.yaml
+```
+
+```bash
 # Run the deployment script
 python3 deploy_vm.py
 ```
+
 The script will automatically create a config.yaml file with the new VM's details.
 
 ### Step 3: Configure VPN & Core Services
@@ -327,7 +358,14 @@ Ten skrypt używa Terraform do stworzenia maszyny wirtualnej, konfiguruje dedyko
 ```bash
 # Zainicjuj Terraform
 terraform init
-# Uruchom skrypt wdrożeniowy
+
+# Po tym kroku wprowadź swoje zmienne do config.yaml
+
+cp config-example.yaml config.yaml
+```
+
+```bash
+# Uruchom skrypt wdrożenia
 python3 deploy_vm.py
 ```
 

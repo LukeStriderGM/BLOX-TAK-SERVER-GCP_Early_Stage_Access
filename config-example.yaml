@@ -1,0 +1,85 @@
+# ======================================================
+# === Main Configuration File for BLOX-TAK-SERVER-GCP ===
+# === Główny Plik Konfiguracyjny BLOX-TAK-SERVER-GCP ===
+# ======================================================
+#
+# English: Fill in the variables below before running the scripts.
+#          Copy this file to config.yaml and edit it.
+#          The config.yaml file is ignored by Git.
+#
+# Polski:  Uzupełnij poniższe zmienne przed uruchomieniem skryptów.
+#          Skopiuj ten plik do config.yaml i edytuj go.
+#          Plik config.yaml jest ignorowany przez Git.
+
+# --- Local Settings ---
+# --- Ustawienia Lokalne ---
+LOCAL_CONFIG:
+  # English: Sudo password for your local admin machine.
+  # Polski:  Hasło do sudo na Twojej lokalnej maszynie administracyjnej.
+  password: 'YOUR_SUDO_PASSWORD'
+
+# --- Global Project Settings ---
+# --- Ustawienia Globalne Projektu ---
+# English: Used by all scripts to configure the environment in GCP and on the server.
+# Polski:  Używane przez wszystkie skrypty do konfiguracji środowiska w GCP i na serwerze.
+GLOBAL_SETTINGS:
+  # English: Google Cloud project settings.
+  # Polski:  Ustawienia projektu Google Cloud.
+  gcp:
+    project_id: 'your-gcp-project-id'
+    region: 'europe-central2'
+    zone: 'europe-central2-c'
+
+  # English: Virtual machine specification.
+  # Polski:  Specyfikacja maszyny wirtualnej.
+  vm:
+    machine_type: 'e2-standard-4'
+    disk_image: 'projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20250701'
+    disk_size_gb: 40
+    disk_type: 'pd-ssd'
+    admin_user: 'blox_tak_server_admin'
+
+  # English: WireGuard VPN network settings.
+  # Polski:  Ustawienia sieci WireGuard VPN.
+  vpn:
+    server_subnet: '10.200.0.0/24'
+    admin_ip: '10.100.0.1/32'
+    # English: The last octet will be added automatically for new clients.
+    # Polski:  Ostatni oktet będzie dodawany automatycznie dla nowych klientów.
+    eud_subnet_prefix: '10.0.0.'
+
+
+  # English: TAK Server file IDs on Google Drive.
+  # Polski:  Identyfikatory plików TAK Server na Google Drive.
+
+  # English: NOTE - these are the repository ID to the files on my Google Drive
+  # Polski: UWAGA - to są ID repozytoriów do plików na moim Dysku Google
+  tak_server_files:
+    # English: ID to the takserver-docker*.zip file.
+    # Polski:  ID do pliku takserver-docker*.zip.
+    zip_id: '1FSP2TzSmSHTpkw3yUPsct9xolY_pamjB'
+    zip_filename: 'takserver-docker-5.4-RELEASE-19.zip'
+    # English: ID to the great repo of CloudRF install scripts:
+    # https://github.com/Cloud-RF/tak-server
+    # - modified for the project's needs with the original MIT license:
+
+    # Polski:  ID do wspaniałego repo skryptów instalacyjnych od CloudRF:
+    # https://github.com/Cloud-RF/tak-server
+    # - zmodyfikowanego na potrzby projektu z pierwotną licencją MIT:
+
+    folder_id: '1MdlXYJ-H9PSMJ6o89IfhXsSJcbMaXMxc'
+
+# --- Machine Configuration ---
+# --- Konfiguracja Maszyn ---
+# English: This section will be automatically populated by the deploy_vm.py script.
+#          Do not edit it manually.
+# Polski:  Ta sekcja będzie automatycznie uzupełniana przez skrypt deploy_vm.py.
+#          Nie edytuj jej ręcznie.
+VM0:
+  name: example-vm-name-to-be-replaced
+  # line 122 deploy_vm.py: password = f'*P@ssw0rd_*_{timestamp_for_password}*'
+  password: '*****'
+  ssh_public_key: 'ssh-ed25519-sk AAAA...'
+  external_ip: '34.x.x.x'
+  internal_ip: '10.x.x.x'
+  last_eud_octet: 1
