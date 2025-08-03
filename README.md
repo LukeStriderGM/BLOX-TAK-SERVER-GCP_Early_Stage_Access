@@ -58,17 +58,7 @@ To use these scripts, you will need the following on your **local admin machine*
 2.  **Google Cloud CLI**: The `gcloud` command-line tool installed and authenticated.
 3.  **Terraform**: The Terraform CLI installed.
 4.  **YubiKey (or other FIDO/U2F key)**: A hardware security key for generating your `ed25519-sk` SSH key. **This is not optional.**
-5.  **Python 3 & Dependencies**:
-    ```bash
-    # Install Python, pip and venv
-    sudo apt-get update && sudo apt-get install -y python3-pip python3-venv
-    # Install project dependencies
-    pip install -r requirements.txt
-    ```
-6.  **Required Tools**:
-    ```bash
-    sudo apt-get install -y qrencode wireguard
-    ```
+5.  **Python 3 & Dependencies**.
 
 <details>
 
@@ -82,49 +72,176 @@ Do użycia tych skryptów potrzebne będą następujące elementy na Twojej **lo
 2.  **Google Cloud CLI**: Zainstalowane i uwierzytelnione narzędzie wiersza poleceń `gcloud`.
 3.  **Terraform**: Zainstalowany interfejs CLI Terraform.
 4.  **YubiKey (lub inny klucz FIDO/U2F)**: Sprzętowy klucz bezpieczeństwa do wygenerowania Twojego klucza SSH `ed25519-sk`. **To nie jest opcjonalne.**
-5.  **Python 3 i Zależności**:
-    ```bash
-    # Zainstaluj Python, pip i venv
-    sudo apt-get update && sudo apt-get install -y python3-pip python3-venv
-    # Zainstaluj zależności projektu
-    pip install -r requirements.txt
-    ```
-6.  **Wymagane Narzędzia**:
-    ```bash
-    sudo apt-get install -y qrencode wireguard
-    ```
+5.  **Python 3 i Zależności**.
 
 </details>
 
 ---
 
-## 🇺🇸 Deployment Guide
+## 🇺🇸 Deployment Guide / 🇵🇱 Instrukcja Wdrożenia
 
 Follow these steps in order to set up your complete TAK Server ecosystem.
 
-### Step 1: Local Admin Machine Setup
+### 🇺🇸 Step 1: Prerequisites, Setup, and Firewall Configuration
 
-1.  **Clone the Repository**:
-    ```bash
-    git clone <URL_TO_THIS_PRIVATE_REPOSITORY>
-    cd BLOX-TAK-SERVER-GCP
-    ```
-2.  **Configure Google Cloud CLI**:
-    ```bash
-    # Log in to your Google Account
-    gcloud auth login
+This initial step covers everything you need to do on your **local admin machine** and in the **GCP Console** before deploying the virtual machine.
 
-    # Set your target GCP Project ID
-    gcloud config set project <YOUR_PROJECT_ID>
-    ```
-3.  **Generate Your YubiKey SSH Key**:
-    If you don't have one, generate a new security key-backed SSH key. You will be prompted to touch your YubiKey.
-    ```bash
-    ssh-keygen -t ed25519-sk -C "your_email@example.com"
-    ```
-    This will create `~/.ssh/id_ed25519_sk` and `~/.ssh/id_ed25519_sk.pub`. The scripts will automatically use the public key.
+### Part A: Local Admin Machine Setup
 
-### Step 2: Deploy the GCP Virtual Machine
+1.  **Install Core Dependencies**:
+    * First, update your system and install Python, pip, venv, and other required tools like `qrencode` and `wireguard`.
+        ```bash
+        sudo apt-get update && sudo apt-get install -y python3-pip python3-venv qrencode wireguard apt-transport-https ca-certificates curl
+        ```
+
+2.  **Install Google Cloud CLI**:
+    * Add the gcloud CLI package source and install the command-line tool.
+        ```bash
+        curl -fsSL [https://packages.cloud.google.com/apt/doc/apt-key.gpg](https://packages.cloud.google.com/apt/doc/apt-key.gpg) | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
+        echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] [https://packages.cloud.google.com/apt](https://packages.cloud.google.com/apt) cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
+        sudo apt-get update && sudo apt-get install -y google-cloud-cli
+        ```
+
+3.  **Install Terraform**:
+    * Add the HashiCorp repository and install Terraform.
+        ```bash
+        sudo curl -fsSL [https://apt.releases.hashicorp.com/gpg](https://apt.releases.hashicorp.com/gpg) | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] [https://apt.releases.hashicorp.com](https://apt.releases.hashicorp.com) $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+        sudo apt-get update && sudo apt-get install -y terraform
+        ```
+
+4.  **Configure GCP Account & Generate SSH Key**:
+    * Log in to your GCP account, set the project, and generate a new hardware-backed SSH key. **A YubiKey (or similar FIDO/U2F key) is mandatory.**
+        ```bash
+        # Log in to your Google Account (will open a browser)
+        gcloud auth login
+
+        # Set your target GCP Project ID
+        gcloud config set project <YOUR_PROJECT_ID>
+
+        # Generate a new security key-backed SSH key
+        ssh-keygen -t ed25519-sk -C "your_email@example.com"
+        ```
+
+5.  **Clone Repository & Install Python Dependencies**:
+    * Finally, clone the project repository and install the required Python packages.
+        ```bash
+        git clone <URL_TO_THIS_PRIVATE_REPOSITORY>
+        cd BLOX-TAK-SERVER-GCP
+        pip install -r requirements.txt
+        ```
+
+### Part B: GCP Firewall Configuration
+
+Before deploying the virtual machine, you must configure the firewall in your GCP project's VPC network to allow necessary traffic.
+
+1.  Navigate to **VPC network -> Firewall** in your Google Cloud Console.
+2.  Click **CREATE FIREWALL RULE** and create the following two rules:
+
+#### Rule 1: Allow SSH Access from Admin IP
+* **Name**: `ssh-22`
+* **Direction of traffic**: `Ingress`
+* **Action on match**: `Allow`
+* **Targets**: `Specified target tags`
+* **Target tags**: `tak-server`
+* **Source filter**: `IPv4 ranges`
+* **Source IPv4 ranges**: `0.0.0.0/32` (Enter your own admin IP here)
+* **Protocols and ports**: `Specified protocols and ports` -> `tcp`: `22`
+
+#### Rule 2: Allow WireGuard VPN Traffic
+* **Name**: `wire-guard`
+* **Direction of traffic**: `Ingress`
+* **Action on match**: `Allow`
+* **Targets**: `Specified target tags`
+* **Target tags**: `tak-server`
+* **Source filter**: `IPv4 ranges`
+* **Source IPv4 ranges**: `0.0.0.0/0`
+* **Protocols and ports**: `Specified protocols and ports` -> `udp`: `51820`
+
+<details>
+<summary>🇵🇱</summary>
+
+### 🇵🇱 Krok 1: Wymagania, Konfiguracja i Reguły Zapory Sieciowej
+
+Ten początkowy krok obejmuje wszystko, co musisz zrobić na swojej **lokalnej maszynie administracyjnej** oraz w **Konsoli GCP** przed wdrożeniem maszyny wirtualnej.
+
+### Część A: Konfiguracja Lokalnej Maszyny Administracyjnej
+
+1.  **Zainstaluj Podstawowe Zależności**:
+    * Najpierw zaktualizuj system i zainstaluj Python, pip, venv oraz inne wymagane narzędzia, takie jak `qrencode` i `wireguard`.
+        ```bash
+        sudo apt-get update && sudo apt-get install -y python3-pip python3-venv qrencode wireguard apt-transport-https ca-certificates curl
+        ```
+
+2.  **Zainstaluj Google Cloud CLI**:
+    * Dodaj źródło pakietów gcloud CLI i zainstaluj narzędzie wiersza poleceń.
+        ```bash
+        curl -fsSL [https://packages.cloud.google.com/apt/doc/apt-key.gpg](https://packages.cloud.google.com/apt/doc/apt-key.gpg) | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
+        echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] [https://packages.cloud.google.com/apt](https://packages.cloud.google.com/apt) cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
+        sudo apt-get update && sudo apt-get install -y google-cloud-cli
+        ```
+
+3.  **Zainstaluj Terraform**:
+    * Dodaj repozytorium HashiCorp i zainstaluj Terraform.
+        ```bash
+        sudo curl -fsSL [https://apt.releases.hashicorp.com/gpg](https://apt.releases.hashicorp.com/gpg) | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] [https://apt.releases.hashicorp.com](https://apt.releases.hashicorp.com) $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+        sudo apt-get update && sudo apt-get install -y terraform
+        ```
+
+4.  **Skonfiguruj Konto GCP i Wygeneruj Klucz SSH**:
+    * Zaloguj się na swoje konto GCP, ustaw projekt i wygeneruj nowy klucz SSH wspierany sprzętowo. **Klucz YubiKey (lub podobny klucz FIDO/U2F) jest obowiązkowy.**
+        ```bash
+        # Zaloguj się na swoje konto Google (otworzy się przeglądarka)
+        gcloud auth login
+
+        # Ustaw docelowy identyfikator projektu GCP
+        gcloud config set project <TWÓJ_PROJECT_ID>
+
+        # Wygeneruj nowy klucz SSH oparty na kluczu bezpieczeństwa
+        ssh-keygen -t ed25519-sk -C "twoj_email@example.com"
+        ```
+
+5.  **Sklonuj Repozytorium i Zainstaluj Zależności Python**:
+    * Na koniec sklonuj repozytorium projektu i zainstaluj wymagane pakiety Python.
+        ```bash
+        git clone <URL_DO_TEGO_PRYWATNEGO_REPOZYTORIUM>
+        cd BLOX-TAK-SERVER-GCP
+        pip install -r requirements.txt
+        ```
+
+### Część B: Konfiguracja Reguł Zapory Sieciowej GCP
+
+Przed wdrożeniem maszyny wirtualnej musisz skonfigurować zaporę sieciową (firewall) w sieci VPC swojego projektu GCP, aby zezwolić na niezbędny ruch.
+
+1.  W konsoli Google Cloud przejdź do **Sieć VPC -> Zapora sieciowa**.
+2.  Kliknij **UTWÓRZ REGUŁĘ ZAPORY SIECIOWEJ** i utwórz dwie poniższe reguły:
+
+#### Reguła 1: Zezwól na Dostęp SSH z Adresu IP Administratora
+* **Nazwa**: `ssh-22`
+* **Kierunek ruchu**: `Przychodzący`
+* **Działanie w przypadku dopasowania**: `Zezwalaj`
+* **Cele**: `Określone tagi docelowe`
+* **Tagi docelowe**: `tak-server`
+* **Filtr źródłowy**: `Zakresy IPv4`
+* **Źródłowe zakresy IPv4**: `0.0.0.0/32` (Wprowadź tutaj własny adres IP administratora)
+* **Protokoły i porty**: `Określone protokoły i porty` -> `tcp`: `22`
+
+#### Reguła 2: Zezwól na Ruch VPN WireGuard
+* **Nazwa**: `wire-guard`
+* **Kierunek ruchu**: `Przychodzący`
+* **Działanie w przypadku dopasowania**: `Zezwalaj`
+* **Cele**: `Określone tagi docelowe`
+* **Tagi docelowe**: `tak-server`
+* **Filtr źródłowy**: `Zakresy IPv4`
+* **Źródłowe zakresy IPv4**: `0.0.0.0/0`
+* **Protokoły i porty**: `Określone protokoły i porty` -> `udp`: `51820`
+
+</details>
+
+---
+
+### 🇺🇸 Step 2: Deploy the GCP Virtual Machine
 
 This script uses Terraform to create the VM, sets up a dedicated user, and adds your YubiKey public key for access.
 
@@ -176,7 +293,7 @@ Download TAK Server Files to the VM:
 This script uses gdown on the remote server to download the necessary TAK Server zip file.
 
 ```bash
-ython3 gdown.py
+python3 gdown.py
 ```
 
 Run the TAK Server Setup:
@@ -202,38 +319,7 @@ Your basic TAK server ecosystem is now operational!
 
 <summary>🇵🇱</summary>
 
-## 🇵🇱 Instrukcja Wdrożenia
-
-Postępuj zgodnie z poniższymi krokami, aby skonfigurować kompletny ekosystem Serwera TAK.
-
-### Krok 1: Konfiguracja Lokalnej Maszyny Administracyjnej
-
-Sklonuj Repozytorium:
-
-```bash
-git clone <URL_DO_TEGO_PRYWATNEGO_REPOZYTORIUM>
-cd BLOX-TAK-SERVER-GCP
-```
-
-Skonfiguruj Google Cloud CLI:
-
-```bash
-# Zaloguj się na swoje konto Google
-gcloud auth login
-# Ustaw docelowy identyfikator projektu GCP
-gcloud config set project <TWOJ_PROJECT_ID>
-```
-
-Wygeneruj Swój Klucz SSH YubiKey:
-Jeśli go nie posiadasz, wygeneruj nowy klucz SSH oparty na kluczu bezpieczeństwa. Zostaniesz poproszony o dotknięcie swojego YubiKey.
-
-```bash
-ssh-keygen -t ed25519-sk -C "twoj_email@example.com"
-```
-
-To utworzy pliki ~/.ssh/id_ed25519_sk i ~/.ssh/id_ed25519_sk.pub. Skrypty automatycznie użyją klucza publicznego.
-
-### Krok 2: Wdróż Maszynę Wirtualną GCP
+### 🇵🇱 Krok 2: Wdróż Maszynę Wirtualną GCP
 Ten skrypt używa Terraform do stworzenia maszyny wirtualnej, konfiguruje dedykowanego użytkownika i dodaje Twój publiczny klucz YubiKey w celu uzyskania dostępu.
 
 ```bash
