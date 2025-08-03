@@ -24,6 +24,7 @@ This package contains the foundational scripts to deploy and manage a complete s
 
 * **Automated VM Deployment**: Utilizes **Terraform** to create and configure a secure GCP virtual machine based on Ubuntu 22.04 LTS.
 * **Mandatory Hardware-Key Security**: Enforces the use of a **YubiKey** (or similar FIDO/U2F key) for all SSH administrative access, eliminating password-based logins.
+    I also use the YubiKey to secure my Google services, as well as all operations requiring sudo on my MDC2 laptop - including login + disk encryption.
 * **Automated WireGuard VPN**: Deploys a WireGuard server for secure, encrypted communication tunnels. Includes scripts to configure both admin (split-tunnel by default) and end-user (split-tunnel by default) clients.
 * **For mission-critical security**, at this stage you can manually switch to the full-tunnel function, which completely cuts off external network traffic and allows you to operate only in a pure TAK ecosystem.
 * **Docker & TAK Server Installation**: Fully automates the installation of Docker and the TAK Server itself, including downloading necessary files from Google Drive.
@@ -40,6 +41,7 @@ Ten pakiet zawiera podstawowe skrypty do wdrożenia i zarządzania kompletną in
 
 * **Automatyczne Wdrożenie Maszyny Wirtualnej**: Wykorzystuje **Terraform** do tworzenia i konfigurowania bezpiecznej maszyny wirtualnej GCP opartej na Ubuntu 22.04 LTS.
 * **Wymuszone Bezpieczeństwo Kluczem Sprzętowym**: Wymusza użycie **YubiKey** (lub podobnego klucza FIDO/U2F) do całego administracyjnego dostępu przez SSH, eliminując logowanie oparte na haśle.
+    Klucza YubiKey używam również do zabezpiecznia moich usług w Google, a także wszystkich operacji wymagających sudo na laptopie MDC2 - również przy logowaniu + szyfrowanie dysków. 
 * **Automatyczny VPN WireGuard**: Wdraża serwer WireGuard do bezpiecznych, szyfrowanych tuneli komunikacyjnych. Zawiera skrypty do konfiguracji zarówno klientów administracyjnych (domyślnie split-tunnel), jak i końcowych użytkowników (domyślnie split-tunnel).
 * **Dla bezpieczeństwa misji o znaczeniu krytycznym**, na tym etapie można przejść ręcznie na funkcję full-tunnel która całkowicie odcina zewnętrzny ruch z sieci i pozwala operować tylko w czystym ekosystemie TAK.
 * **Instalacja Dockera i Serwera TAK**: W pełni automatyzuje instalację Dockera i samego Serwera TAK, w tym pobieranie niezbędnych plików z Dysku Google.
@@ -491,6 +493,18 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 Ten projekt jest objęty licencją MIT. Zobacz plik LICENSE, aby uzyskać szczegółowe informacje.
 
+Tłumaczenie [PL]:
+
+Licencja MIT
+
+Prawa autorskie (c) 2025 Łukasz "LukeStriderGM" Andruszkiewicz
+
+Niniejszym udziela się bezpłatnej zgody każdej osobie wchodzącej w posiadanie kopii tego oprogramowania i powiązanych z nim plików dokumentacji (dalej „Oprogramowanie”), na obchodzenie się z Oprogramowaniem bez ograniczeń, włączając w to bez ograniczeń prawa do używania, kopiowania, modyfikowania, łączenia, publikowania, dystrybucji, sublicencjonowania i/lub sprzedaży kopii Oprogramowania, oraz na zezwolenie osobom, którym Oprogramowanie jest dostarczane, aby to czyniły, pod następującymi warunkami:
+
+Powyższa nota o prawach autorskich i ta nota o pozwoleniu muszą być dołączone do wszystkich kopii lub istotnych części Oprogramowania.
+
+OPROGRAMOWANIE JEST DOSTARCZANE "TAKIM, JAKIE JEST", BEZ JAKIEJKOLWIEK GWARANCJI, WYRAŹNEJ LUB DOROZUMIANEJ, WŁĄCZAJĄC W TO, ALE NIE OGRANICZAJĄC SIĘ DO, GWARANCJI PRZYDATNOŚCI HANDLOWEJ, PRZYDATNOŚCI DO OKREŚLONEGO CELU ORAZ NIENARUSZALNOŚCI PRAW. W ŻADNYM WYPADKU AUTORZY LUB POSIADACZE PRAW AUTORSKICH NIE BĘDĄ ODPOWIEDZIALNI ZA JAKIEKOLWIEK ROSZCZENIA, SZKODY LUB INNE ZOBOWIĄZANIA, CZY TO W WYNIKU DZIAŁANIA UMOWY, DELIKTU CZY W INNY SPOSÓB, WYNIKAJĄCE Z, LUB W ZWIĄZKU Z OPROGRAMOWANIEM LUB UŻYCIEM LUB INNYMI DZIAŁANIAMI W OPROGRAMOWANIU.
+
 </details>
 
 ---
@@ -505,6 +519,136 @@ Kodeks Postępowania
 
 Ten projekt i wszyscy w nim uczestniczący podlegają Zasadom Współtwórcy (Contributor Covenant). Zobacz plik CODE_OF_CONDUCT.md, aby uzyskać szczegółowe informacje.
 
-</details>
+Tłumaczenie [PL]:
+
+
+## Kodeks Postępowania - Contributor Covenant
+
+### Nasza Obietnica
+
+Jako członkinie i członkowie, współtwórczynie i współtwórcy oraz liderki i liderzy
+zobowiązujemy się, że udział w naszej społeczności będzie wolny od nękania dla
+każdego, bez względu na wiek, budowę ciała, widoczną lub niewidoczną
+niepełnosprawność, pochodzenie etniczne, cechy płciowe, tożsamość i ekspresję
+płciową, poziom doświadczenia, wykształcenie, status społeczno-ekonomiczny,
+narodowość, wygląd, rasę, religię czy tożsamość i orientację seksualną.
+
+Zobowiązujemy się do działania i interakcji w sposób, który przyczynia się do
+tworzenia otwartej, przyjaznej, zróżnicowanej, inkluzywnej i zdrowej społeczności.
+
+### Nasze Standardy
+
+Przykłady zachowań, które przyczyniają się do tworzenia pozytywnego środowiska
+dla naszej społeczności, obejmują:
+
+* Okazywanie empatii i życzliwości wobec innych osób
+* Szacunek dla odmiennych opinii, punktów widzenia i doświadczeń
+* Udzielanie i taktowne przyjmowanie konstruktywnej informacji zwrotnej
+* Przyjmowanie odpowiedzialności, przepraszanie osób dotkniętych naszymi
+    błędami i wyciąganie z nich wniosków
+* Skupianie się nie tylko na tym, co najlepsze dla nas jako jednostek, ale dla
+    całej społeczności
+
+Przykłady niedopuszczalnych zachowań obejmują:
+
+* Używanie języka lub obrazów o charakterze seksualnym oraz wszelkiego rodzaju
+    zaloty lub umizgi o charakterze seksualnym
+* Trolling, obraźliwe lub uwłaczające komentarze oraz ataki osobiste lub
+    polityczne
+* Nękanie publiczne lub prywatne
+* Publikowanie prywatnych informacji innych osób, takich jak adres fizyczny lub
+    mailowy, bez ich wyraźnej zgody
+* Inne zachowania, które można by uznać za niewłaściwe w środowisku
+    profesjonalnym
+
+### Obowiązki Egzekwowania Zasad
+
+Liderki i liderzy społeczności są odpowiedzialni za wyjaśnianie i egzekwowanie
+naszych standardów oraz podejmą odpowiednie i sprawiedliwe działania naprawcze w
+odpowiedzi na każde zachowanie, które uznają za niestosowne, zagrażające,
+obraźliwe lub szkodliwe.
+
+Liderki i liderzy społeczności mają prawo i obowiązek usuwać, edytować lub
+odrzucać komentarze, commity, kod, edycje wiki, zgłoszenia i inne formy wkładu,
+które nie są zgodne z niniejszym Kodeksem Postępowania, i w razie potrzeby
+przedstawią powody swoich decyzji moderacyjnych.
+
+### Zakres
+
+Niniejszy Kodeks Postępowania obowiązuje we wszystkich przestrzeniach
+społeczności, a także wtedy, gdy dana osoba oficjalnie reprezentuje społeczność w
+przestrzeni publicznej. Przykłady reprezentowania naszej społeczności obejmują
+używanie oficjalnego adresu e-mail, publikowanie postów za pośrednictwem
+oficjalnego konta w mediach społecznościowych lub występowanie w charakterze
+wyznaczonej przedstawicielki lub przedstawiciela na wydarzeniu online lub offline.
+
+### Egzekwowanie Zasad
+
+Przypadki obraźliwego, nękającego lub w inny sposób niedopuszczalnego zachowania
+mogą być zgłaszane liderkom i liderom społeczności odpowiedzialnym za egzekwowanie
+zasad pod adresem **luke.strider.gm@gmail.com**.
+Wszystkie skargi zostaną rozpatrzone i zbadane niezwłocznie i sprawiedliwie.
+
+Wszystkie liderki i liderzy społeczności są zobowiązani do poszanowania prywatności i
+bezpieczeństwa osoby zgłaszającej incydent.
+
+### Wytyczne Dotyczące Egzekwowania Zasad
+
+Liderki i liderzy społeczności będą postępować zgodnie z niniejszymi Wytycznymi
+Dotyczącymi Wpływu na Społeczność przy określaniu konsekwencji za każde
+działanie, które uznają za naruszenie niniejszego Kodeksu Postępowania:
+
+### 1. Naprawienie
+
+**Wpływ na Społeczność**: Używanie niestosownego języka lub inne zachowanie uznane
+za nieprofesjonalne lub niemile widziane w społeczności.
+
+**Konsekwencja**: Prywatne, pisemne upomnienie od liderek lub liderów społeczności,
+wyjaśniające naturę naruszenia i powód, dla którego zachowanie było
+niestosowne. Może zostać zażądane publiczne przeproszenie.
+
+### 2. Ostrzeżenie
+
+**Wpływ na Społeczność**: Naruszenie w wyniku pojedynczego incydentu lub serii
+działań.
+
+**Konsekwencja**: Ostrzeżenie z konsekwencjami za dalsze zachowanie. Zakaz
+interakcji z osobami zaangażowanymi, w tym nieproszonych interakcji z osobami
+egzekwującymi Kodeks Postępowania, przez określony czas. Obejmuje to unikanie
+interakcji w przestrzeniach społeczności, jak i na kanałach zewnętrznych, takich
+jak media społecznościowe. Naruszenie tych warunków może prowadzić do
+tymczasowego lub stałego bana.
+
+### 3. Tymczasowy Ban
+
+**Wpływ na Społeczność**: Poważne naruszenie standardów społeczności, w tym
+utrzymujące się niestosowne zachowanie.
+
+**Konsekwencja**: Tymczasowy zakaz jakichkolwiek interakcji lub publicznej
+komunikacji ze społecznością na określony czas. W tym okresie zabronione są
+publiczne i prywatne interakcje z osobami zaangażowanymi, w tym nieproszone
+interakcje z osobami egzekwującymi Kodeks Postępowania. Naruszenie tych
+warunków może prowadzić do stałego bana.
+
+### 4. Stały Ban
+
+**Wpływ na Społeczność**: Wykazywanie wzorca naruszania standardów społeczności,
+w tym utrzymujące się niestosowne zachowanie, nękanie danej osoby lub agresja
+wobec lub oczernianie grup osób.
+
+**Konsekwencja**: Stały zakaz jakichkolwiek publicznych interakcji w ramach
+społeczności.
 
 ---
+Atrybucja
+
+Niniejszy Kodeks Postępowania jest adaptacją [Contributor Covenant][homepage],
+wersja 2.1, dostępnej pod adresem
+[https://www.contributor-covenant.org/version/2/1/code_of_conduct.html][v2.1].
+
+[homepage]: https://www.contributor-covenant.org
+[v2.1]: https://www.contributor-covenant.org/version/2/1/code_of_conduct.html
+
+---
+
+</details>
