@@ -407,7 +407,7 @@ Twój podstawowy ekosystem serwera TAK jest teraz gotowy do działania!
 
 There is also the option to run a "drone simulation" for testing with the UAS-TOOL plugin. If needed, I am also ready to undertake the first-time integration of physical drones compatible with this plugin: in the BLOX-TAK-SERVER-GCP.
 
-### But the true power of the BLOX-TAK-SERVER-GCP ecosystem is realized in cooperation with the BLOX-TAK-SERVER-UCP-GCP software package (IUCP - Individual User Connection Profile).
+### But the true power of the BLOX-TAK-SERVER-GCP ecosystem is realized in cooperation with the BLOX-TAK-SERVER-IUCP-GCP software package (IUCP - Individual User Connection Profile).
 
 The IUCP project integrates directly with this GCP foundation and provides:
 
@@ -418,6 +418,13 @@ The IUCP project integrates directly with this GCP foundation and provides:
 * **Advanced Maintenance:** Scripts for bulk certificate revocation and user lifecycle management.
 
 The IUCP extension transforms an hour-long server configuration into a system where adding a new, fully prepared user takes less than a minute of automated work.
+
+<br>
+The basic version of this software, which works with physical TAK servers (locally and remotely), is available in the public repository:
+
+https://github.com/LukeStriderGM/BLOX-TAK-SERVER-IUCP
+
+The GCP version is reserved for the BLOX-TAK-SaaS project and will be publicly available only once I'm out of debt.
 
 <details>
 
@@ -440,6 +447,13 @@ Projekt IPPU integruje się bezpośrednio z tą podstawą GCP i zapewnia:
 * **Zaawansowana Konserwacja:** Skrypty do masowego unieważniania certyfikatów i zarządzania cyklem życia użytkownika.
 
 Rozszerzenie IPPU przekształca godzinną konfigurację serwera w system, w którym dodanie nowego, w pełni przygotowanego użytkownika zajmuje mniej niż minutę zautomatyzowanej pracy.
+
+<br>
+Podstawowa wersja tego oprogramowania która współpracuje z fizycznymi serwerami TAK (lokalnie i zdalnie), znajduje się w publicznym repozytorium:
+
+https://github.com/LukeStriderGM/BLOX-TAK-SERVER-IUCP
+
+Wersja dla GCP zarezerwowana jest dla projektu BLOX-TAK-SaaS i zostanie udostępniona publicznie dopiero - gdy wydostanę się z długów. 
 
 </details>
 
