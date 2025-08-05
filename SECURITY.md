@@ -12,4 +12,5 @@
 #### [INCIDENT DOCS - GoogleDrive](https://drive.google.com/drive/folders/1DIs_7qLvylskWJz5AfjN15lrO8ZnhSQx)
 
 EN: https://www.linkedin.com/posts/lukebluelox_security-incident-analysis-and-action-plan-activity-7355203415456595968-vCLE
+
 PL: https://www.linkedin.com/posts/lukebluelox_analiza-incydentu-bezpiecze%C5%84stwa-i-plan-dzia%C5%82ania-activity-7355204039061516288-Kf-P
