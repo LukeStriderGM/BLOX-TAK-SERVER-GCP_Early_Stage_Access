@@ -10,4 +10,5 @@ Użyj tej sekcji, aby poinformować o tym, które wersje Twojego projektu są ob
 
 ## Reporting a Vulnerability
 
-### [INCIDENT DOCS](https://github.com/LukeStriderGM/BLOX-TAK-SERVER-GCP_Early_Stage_Access/tree/master/INCIDENTS)
+### [INCIDENT DOCS - GitHUB](https://github.com/LukeStriderGM/BLOX-TAK-SERVER-GCP_Early_Stage_Access/tree/master/INCIDENTS)
+### [INCIDENT DOCS - GoogleDrive](https://drive.google.com/drive/folders/1DIs_7qLvylskWJz5AfjN15lrO8ZnhSQx)
