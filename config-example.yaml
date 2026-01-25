@@ -17,6 +17,21 @@ LOCAL_CONFIG:
   # English: Sudo password for your local admin machine.
   # Polski:  Hasło do sudo na Twojej lokalnej maszynie administracyjnej.
   password: 'YOUR_SUDO_PASSWORD'
+  
+# --- Local File Paths (User specific) ---
+# --- Lokalne Ścieżki Plików (Specyficzne dla użytkownika) ---
+LOCAL_PATHS:
+  # English: List of local directories containing .pcapng files to be included in the report.
+  #          Use absolute paths or ~ for home directory.
+  # Polski:  Lista lokalnych katalogów zawierających pliki .pcapng do dołączenia do raportu.
+  #          Użyj pełnych ścieżek lub ~ dla katalogu domowego.
+  pcap_directories:
+    - "~/Path/To/Your/Pcap/Folder_1"
+    - "~/Path/To/Your/Pcap/Folder_2"
+  
+  # English: Directory where generated reports and logs will be stored.
+  # Polski:  Katalog, w którym będą zapisywane wygenerowane raporty i logi.
+  evidence_output_dir: "evidence"
 
 # --- Global Project Settings ---
 # --- Ustawienia Globalne Projektu ---

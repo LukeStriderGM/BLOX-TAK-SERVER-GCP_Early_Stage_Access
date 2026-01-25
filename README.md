@@ -534,6 +534,128 @@ NIEODWRACALNE. Używa Terraform do całkowitego zniszczenia maszyny wirtualnej i
 
 ---
 
+## 🇺🇸 Smart Auditor & Forensic Reporting
+
+This project includes a specialized, forensic-grade auditing suite designed to generate comprehensive operational reports. The process is divided into three phases to ensure data integrity, creating a complete "Chain of Custody" for your infrastructure.
+
+The suite generates 4 PDF variants simultaneously (EN/PL x Public/Private) and packages everything into a master ZIP file.
+
+### Phase 1: Diagnostics & Base Report (`auditor_smart.py`)
+Connects to the VM via SSH and performs a deep scan of the system.
+* **Deep Docker Inspection:** Lists **all** containers (running, stopped, and failed) using `docker ps -a --no-trunc`.
+* **System Metrics:** Captures real-time uptime, kernel version, and resource usage.
+* **Output:** Generates the initial 2-page PDF Operational Report.
+
+```bash
+python3 auditor_smart.py
+```
+
+### Phase 2: Evidence Collection (`log_collector.py`)
+
+Harvests logs from the remote machine and integrates them into the report.
+
+* **Harvesting:** Collects system logs (syslog, auth.log, dmesg) and logs from every Docker container detected in Phase 1.
+* **Integrity:** Downloads the logs as a .tar.gz archive and calculates the MD5 checksum.
+* **In-Place Update:** Appends "Appendix A: Log Package Manifest" to the existing PDF reports, listing every captured file and its size without breaking the document structure.
+
+```bash
+python3 log_collector.py
+```
+
+### Phase 3: Finalization & Cold Storage (`report_finisher.py`)
+
+The most critical phase. It secures the infrastructure state and network evidence.
+
+⚠️ **IMPORTANT:** You must disable the WireGuard VPN before running this step to ensure direct connectivity with the Google Cloud API for snapshot management.
+
+```bash
+# 1. Disconnect VPN (Example command)
+sudo wg-quick down <path_to_your_conf_file>
+
+# 2. Run the Finisher
+python3 report_finisher.py
+```
+
+* **Cold Snapshot:** Automatically stops the VM, triggers a GCP Disk Snapshot (ensuring filesystem consistency), and restarts the VM.
+* **Snapshot Metrics:** Reports both the Provisioned Disk Size and the Real (Compressed) Usage.
+* **Network Forensics:** Scans local directories (defined in config.yaml) for Wireshark (.pcapng) files and catalogs them.
+* **Master Packaging:** Appends "Appendix B: Infrastructure & Network Security" to the PDFs and zips all reports, logs, and PCAP files into a final, timestamped `EVIDENCE_... .zip` package.
+
+
+* **PORTFOLIO:** https://github.com/LukeStriderGM/BLOX-TAK-SERVER-GCP_Early_Stage_Access/BLOX_TAK_ECOSYSTEM_PORTFOLIO_EN.pdf
+
+If you are interested in the offer, collaboration, or support, please carefully read the posts and their links:
+
+Linkedin: https://www.linkedin.com/posts/lukebluelox_onemanarmy-nightghost-c4isr-activity-7417879471732486144-PdGU
+
+𝕏: https://x.com/LukeStriderGM/status/2012118634022183206
+
+<details>
+
+<summary>🇵🇱 [Kliknij Aby Rozwinąć Opis Modułu Audytowego]</summary>
+
+## 🇵🇱 Smart Auditor i Raportowanie Śledcze
+
+Ten projekt zawiera specjalistyczny pakiet audytowy klasy forensic, zaprojektowany do generowania kompleksowych raportów operacyjnych. Proces jest podzielony na trzy fazy, aby zapewnić integralność danych, tworząc pełny "Łańcuch Dowodowy" (Chain of Custody) dla Twojej infrastruktury.
+
+Pakiet generuje jednocześnie 4 warianty PDF (EN/PL x Publiczny/Prywatny) i pakuje wszystko w główny plik ZIP.
+
+### Faza 1: Diagnostyka i Raport Bazowy (`auditor_smart.py`)
+
+Łączy się z maszyną wirtualną przez SSH i przeprowadza głębokie skanowanie systemu.
+
+* **Głęboka Inspekcja Docker:** Listuje wszystkie kontenery (działające, zatrzymane i po awarii) używając `docker ps -a --no-trunc`.
+* **Metryki Systemowe:** Przechwytuje czas pracy (uptime), wersję jądra i zużycie zasobów w czasie rzeczywistym.
+* **Wynik:** Generuje wstępny, 2-stronicowy Raport Operacyjny PDF.
+
+```bash
+python3 auditor_smart.py
+```
+
+### Faza 2: Zbieranie Dowodów (`log_collector.py`)
+
+Pobiera logi ze zdalnej maszyny i integruje je z raportem.
+
+* **Zbieranie (Harvesting):** Pobiera logi systemowe (syslog, auth.log, dmesg) oraz logi z każdego kontenera wykrytego w Fazie 1.
+* **Integralność:** Pobiera logi jako archiwum .tar.gz i oblicza sumę kontrolną MD5.
+* **Aktualizacja w Miejscu:** Dołącza "Załącznik A: Spis Zawartości Logów" do istniejących raportów PDF, listując każdy przechwycony plik i jego rozmiar, zachowując strukturę dokumentu.
+
+```bash
+python3 log_collector.py
+```
+
+### Faza 3: Finalizacja i Zimny Magazyn (`report_finisher.py`)
+
+Najważniejsza faza. Zabezpiecza stan infrastruktury i dowody sieciowe.
+
+⚠️ **WAŻNE:** Musisz wyłączyć VPN WireGuard przed uruchomieniem tego kroku, aby zapewnić bezpośrednią łączność z API Google Cloud do zarządzania snapshotami.
+
+```bash
+# 1. Rozłącz VPN (Przykładowa komenda)
+sudo wg-quick down <ścieżka_do_twojego_pliku_conf>
+
+# 2. Uruchom Finalizator
+python3 report_finisher.py
+```
+
+* **Zimna Migawka (Cold Snapshot):** Automatycznie zatrzymuje VM, wyzwala Migawkę Dysku GCP (gwarantując spójność systemu plików) i restartuje VM.
+* **Metryki Migawki:** Raportuje zarówno Zaaprowizowany Rozmiar Dysku, jak i Rzeczywiste (Skompresowane) Zużycie.
+* **Informatyka Śledcza Sieci:** Skanuje lokalne katalogi (zdefiniowane w config.yaml) w poszukiwaniu plików Wireshark (.pcapng) i kataloguje je.
+* **Główne Pakowanie:** Dołącza "Załącznik B: Bezpieczeństwo i Sieci" do plików PDF i pakuje wszystkie raporty, logi oraz pliki PCAP w finalną paczkę `EVIDENCE_... .zip` z sygnaturą czasową.
+
+
+* **PORTFOLIO:** https://github.com/LukeStriderGM/BLOX-TAK-SERVER-GCP_Early_Stage_Access/BLOX_TAK_ECOSYSTEM_PORTFOLIO_PL.pdf
+
+Jeśli jesteś zainteresowany ofertą, współpracą lub wsparciem -zapoznaj się dokładnie z treścią postów i ich linkami dla:
+
+Linkedin: https://www.linkedin.com/posts/lukebluelox_onemanarmy-nightghost-c4isr-activity-7417879508822958080-gnkK
+
+𝕏: https://x.com/LukeStriderGM/status/2012117712370078032
+
+</details>
+
+---
+
 ## 🇺🇸 License
 This project is licensed under the MIT License. See the LICENSE file for details.
 

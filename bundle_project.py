@@ -8,7 +8,7 @@ import datetime
 
 # English: Set your project version here. It will be used in the output filename.
 # Polski:  Ustaw tutaj wersję swojego projektu. Zostanie ona użyta w nazwie pliku wyjściowego.
-VERSION = "1.0.0.1"
+VERSION = "1.0.0.2"
 
 # List of directories to absolutely exclude from the bundling process.
 # Lista katalogów do bezwzględnego wykluczenia z procesu pakowania.
@@ -40,7 +40,8 @@ EXTENSIONS_TO_EXCLUDE = {
     '.zip',
     '.png',
     '.log',
-    '.tmp'
+    '.tmp',
+    '.pdf'
 }
 
 
