@@ -582,7 +582,7 @@ python3 report_finisher.py
 * **Master Packaging:** Appends "Appendix B: Infrastructure & Network Security" to the PDFs and zips all reports, logs, and PCAP files into a final, timestamped `EVIDENCE_... .zip` package.
 
 
-* **PORTFOLIO:** https://github.com/LukeStriderGM/BLOX-TAK-SERVER-GCP_Early_Stage_Access/BLOX_TAK_ECOSYSTEM_PORTFOLIO_EN.pdf
+* **PORTFOLIO:** https://github.com/LukeStriderGM/BLOX-TAK-SERVER-GCP_Early_Stage_Access/blob/master/BLOX_TAK_ECOSYSTEM_PORTFOLIO_EN.pdf
 
 If you are interested in the offer, collaboration, or support, please carefully read the posts and their links:
 
@@ -644,7 +644,7 @@ python3 report_finisher.py
 * **Główne Pakowanie:** Dołącza "Załącznik B: Bezpieczeństwo i Sieci" do plików PDF i pakuje wszystkie raporty, logi oraz pliki PCAP w finalną paczkę `EVIDENCE_... .zip` z sygnaturą czasową.
 
 
-* **PORTFOLIO:** https://github.com/LukeStriderGM/BLOX-TAK-SERVER-GCP_Early_Stage_Access/BLOX_TAK_ECOSYSTEM_PORTFOLIO_PL.pdf
+* **PORTFOLIO:** https://github.com/LukeStriderGM/BLOX-TAK-SERVER-GCP_Early_Stage_Access/blob/master/BLOX_TAK_ECOSYSTEM_PORTFOLIO_PL.pdf
 
 Jeśli jesteś zainteresowany ofertą, współpracą lub wsparciem -zapoznaj się dokładnie z treścią postów i ich linkami dla:
 
