@@ -536,6 +536,10 @@ NIEODWRACALNE. Używa Terraform do całkowitego zniszczenia maszyny wirtualnej i
 
 ## 🇺🇸 Smart Auditor & Forensic Reporting
 
+Linkedin: https://www.linkedin.com/posts/lukebluelox_blox-tak-server-gcpearlystageaccessbloxtakecosystemportfolioenpdf-activity-7421068771584520192-DL3_?utm_source=share&utm_medium=member_desktop&rcm=ACoAADA_czcBUowVCMWqBo4HkjnFOu4l4tbD8Kc
+
+𝕏: https://x.com/LukeStriderGM/status/2015307676129853565
+
 This project includes a specialized, forensic-grade auditing suite designed to generate comprehensive operational reports. The process is divided into three phases to ensure data integrity, creating a complete "Chain of Custody" for your infrastructure.
 
 The suite generates 4 PDF variants simultaneously (EN/PL x Public/Private) and packages everything into a master ZIP file.
@@ -595,6 +599,10 @@ Linkedin: https://www.linkedin.com/posts/lukebluelox_onemanarmy-nightghost-c4isr
 <summary>🇵🇱 [Kliknij Aby Rozwinąć Opis Modułu Audytowego]</summary>
 
 ## 🇵🇱 Smart Auditor i Raportowanie Śledcze
+
+Linkedin: https://www.linkedin.com/posts/lukebluelox_blox-tak-server-gcpearlystageaccessbloxtakecosystemportfolioplpdf-activity-7421068748301762560-cgdY?utm_source=share&utm_medium=member_desktop&rcm=ACoAADA_czcBUowVCMWqBo4HkjnFOu4l4tbD8Kc
+
+𝕏: https://x.com/LukeStriderGM/status/2015307070095187998
 
 Ten projekt zawiera specjalistyczny pakiet audytowy klasy forensic, zaprojektowany do generowania kompleksowych raportów operacyjnych. Proces jest podzielony na trzy fazy, aby zapewnić integralność danych, tworząc pełny "Łańcuch Dowodowy" (Chain of Custody) dla Twojej infrastruktury.
 
