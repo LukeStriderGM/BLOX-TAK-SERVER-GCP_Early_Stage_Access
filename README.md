@@ -1,8 +1,6 @@
 # 🇺🇸 BLOX-TAK-SERVER-GCP (Early Stage Access)
 
-Welcome to the early stage private repository for the **BLOX-TAK-SERVER-GCP** project. This suite of scripts is designed to provide a robust, secure, and highly automated foundation for deploying a TAK (Team Awareness Kit) ecosystem on the Google Cloud Platform.
-
-This repository is currently shared with a select group of authorities, mentors, and leaders within the TAK community for feedback, discussion, and testing. The goal is to refine this core infrastructure before a potential public release.
+Welcome to the early stage repository for the **BLOX-TAK-SERVER-GCP** project. This suite of scripts is designed to provide a robust, secure, and highly automated foundation for deploying a TAK (Team Awareness Kit) ecosystem on the Google Cloud Platform.
 
 <details>
 
@@ -10,9 +8,7 @@ This repository is currently shared with a select group of authorities, mentors,
 
 # 🇵🇱 BLOX-TAK-SERVER-GCP (Dostęp Do Wczesnego Etapu)
 
-Witaj we wczesnym, prywatnym repozytorium projektu **BLOX-TAK-SERVER-GCP**. Ten pakiet skryptów został zaprojektowany, aby zapewnić solidną, bezpieczną i wysoce zautomatyzowaną podstawę do wdrażania ekosystemu TAK (Team Awareness Kit) na platformie Google Cloud Platform.
-
-To repozytorium jest obecnie udostępniane wybranej grupie autorytetów, mentorów i liderów w społeczności TAK w celu uzyskania opinii, dyskusji i testów. Celem jest udoskonalenie tej podstawowej infrastruktury przed potencjalnym publicznym wydaniem.
+Witaj we wczesnym repozytorium projektu **BLOX-TAK-SERVER-GCP**. Ten pakiet skryptów został zaprojektowany, aby zapewnić solidną, bezpieczną i wysoce zautomatyzowaną podstawę do wdrażania ekosystemu TAK (Team Awareness Kit) na platformie Google Cloud Platform.
 
 </details>
 
