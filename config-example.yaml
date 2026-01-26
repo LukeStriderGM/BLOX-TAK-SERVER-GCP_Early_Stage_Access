@@ -69,7 +69,18 @@ GLOBAL_SETTINGS:
 
   # English: NOTE - these are the repository ID to the files on my Google Drive
   # Polski: UWAGA - to są ID repozytoriów do plików na moim Dysku Google
+
   tak_server_files:
+    # English: DEFAULT CONFIGURATION: Uses Google Drive repository for ease of access.
+    #          SECURITY UPGRADE: For professional deployments and established cooperation,
+    #          we offer a High Security setup using private Google Cloud Storage buckets.
+    #          This ensures isolated data transfer (internal IP only) with zero public access.
+
+    # Polski:  KONFIGURACJA DOMYŚLNA: Korzysta z repozytorium Google Drive dla ułatwienia dostępu.
+    #          UPGRADE BEZPIECZEŃSTWA: Dla wdrożeń profesjonalnych i przy nawiązaniu współpracy,
+    #          oferujemy konfigurację High Security z użyciem prywatnych bucketów Google Cloud Storage.
+    #          Zapewnia to izolowany transfer danych (tylko sieć wewnętrzna) bez dostępu publicznego.
+
     # English: ID to the takserver-docker*.zip file.
     # Polski:  ID do pliku takserver-docker*.zip.
     zip_id: '1FSP2TzSmSHTpkw3yUPsct9xolY_pamjB'
