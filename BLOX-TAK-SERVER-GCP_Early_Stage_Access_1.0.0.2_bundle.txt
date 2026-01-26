@@ -1,6 +1,6 @@
 Project Bundle: BLOX-TAK-SERVER-GCP_Early_Stage_Access
 Version: 1.0.0.2
-Generated on: 2026-01-25 09:52:46
+Generated on: 2026-01-26 15:43:07
 ========================================
 
 --- START FILE: .gitignore ---
@@ -3428,6 +3428,10 @@ SOFTWARE.
 
 Welcome to the early stage repository for the **BLOX-TAK-SERVER-GCP** project. This suite of scripts is designed to provide a robust, secure, and highly automated foundation for deploying a TAK (Team Awareness Kit) ecosystem on the Google Cloud Platform.
 
+Linkedin: https://www.linkedin.com/posts/lukebluelox_blox-tak-server-gcpearlystageaccessbloxtakecosystemportfolioenpdf-activity-7421440299895476224-WpfG
+
+𝕏: https://x.com/LukeStriderGM/status/2015676290469167138
+
 <details>
 
 <summary>🇵🇱 [Kliknij Trójkąt Po Lewej Stronie Aby Rozwinąć Opis w Języku Polskim]</summary>
@@ -3435,6 +3439,10 @@ Welcome to the early stage repository for the **BLOX-TAK-SERVER-GCP** project. T
 # 🇵🇱 BLOX-TAK-SERVER-GCP (Dostęp Do Wczesnego Etapu)
 
 Witaj we wczesnym repozytorium projektu **BLOX-TAK-SERVER-GCP**. Ten pakiet skryptów został zaprojektowany, aby zapewnić solidną, bezpieczną i wysoce zautomatyzowaną podstawę do wdrażania ekosystemu TAK (Team Awareness Kit) na platformie Google Cloud Platform.
+
+Linkedin: https://www.linkedin.com/posts/lukebluelox_blox-tak-server-gcpearlystageaccessbloxtakecosystemportfolioplpdf-activity-7421437949730541568-ZMFe
+
+𝕏: https://x.com/LukeStriderGM/status/2015672799919304728
 
 </details>
 
@@ -17063,7 +17071,18 @@ GLOBAL_SETTINGS:
 
   # English: NOTE - these are the repository ID to the files on my Google Drive
   # Polski: UWAGA - to są ID repozytoriów do plików na moim Dysku Google
+
   tak_server_files:
+    # English: DEFAULT CONFIGURATION: Uses Google Drive repository for ease of access.
+    #          SECURITY UPGRADE: For professional deployments and established cooperation,
+    #          we offer a High Security setup using private Google Cloud Storage buckets.
+    #          This ensures isolated data transfer (internal IP only) with zero public access.
+
+    # Polski:  KONFIGURACJA DOMYŚLNA: Korzysta z repozytorium Google Drive dla ułatwienia dostępu.
+    #          UPGRADE BEZPIECZEŃSTWA: Dla wdrożeń profesjonalnych i przy nawiązaniu współpracy,
+    #          oferujemy konfigurację High Security z użyciem prywatnych bucketów Google Cloud Storage.
+    #          Zapewnia to izolowany transfer danych (tylko sieć wewnętrzna) bez dostępu publicznego.
+
     # English: ID to the takserver-docker*.zip file.
     # Polski:  ID do pliku takserver-docker*.zip.
     zip_id: '1FSP2TzSmSHTpkw3yUPsct9xolY_pamjB'
