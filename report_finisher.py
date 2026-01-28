@@ -486,8 +486,8 @@ def main():
     os.system("clear || cls")
     
     print("="*60)
-    print("=== REPORT FINISHER v12.3 (YAML CONFIG + IN-PLACE) ===")
-    print("=== FINALIZATOR RAPORTÓW v12.3 (KONFIGURACJA YAML + NADPISYWANIE) ===")
+    print("=== REPORT FINISHER v12.4 (SNAPSHOT PROMPT) ===")
+    print("=== FINALIZATOR RAPORTÓW v12.4 (PYTANIE O SNAPSHOT) ===")
     print("="*60)
     
     # Load configuration
@@ -535,15 +535,32 @@ def main():
             print("❌ Invalid selection."); return
     except ValueError:
         print("❌ Invalid input."); return
-            
-    snap_name = manage_vm_lifecycle(target_vm_name, project_id, zone)
-    if not snap_name: return
 
-    snap_data = get_snapshot_details(snap_name, project_id)
+    # --- SNAPSHOT PROMPT LOGIC ---
+    # --- LOGIKA PYTANIA O SNAPSHOT ---
+    print(f"\n❓ Do you want to create a COLD SNAPSHOT for {target_vm_name}? (Y/n)")
+    print(f"❓ Czy chcesz utworzyć ZIMNĄ MIGAWKĘ dla {target_vm_name}? (T/n)")
+    snap_choice = input("> ").strip().lower()
+
+    if snap_choice == 'n':
+        print(f"⏩ Skipping Snapshot creation as per user request.")
+        print(f"⏩ Pomijanie tworzenia Snapshotu na żądanie użytkownika.")
+        snap_data = {
+            'name': "SKIPPED (User Request)",
+            'status': "SKIPPED",
+            'size': "0 GB / 0 GB",
+            'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'link': "N/A - Snapshot creation skipped"
+        }
+    else:
+        # Proceed with normal snapshot workflow
+        snap_name = manage_vm_lifecycle(target_vm_name, project_id, zone)
+        if not snap_name: return
+        snap_data = get_snapshot_details(snap_name, project_id)
+
     if snap_data:
         print(f"\n🔗 DISK_IMAGE URI:\n{snap_data['link']}")
         print(f"🕒 TIMESTAMP: {snap_data['time']}")
-        # RESTORED LOGIC REQUESTED
         print(f"💾 DISK INFO: {snap_data['size']}\n")
 
     pcaps_full = get_pcap_full_paths()
