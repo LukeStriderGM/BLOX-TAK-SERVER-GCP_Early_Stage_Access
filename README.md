@@ -571,11 +571,11 @@ Harvests logs from the remote machine and integrates them into the report.
 * **In-Place Update:** Appends "Appendix A: Log Package Manifest" to the existing PDF reports, listing every captured file and its size without breaking the document structure.
 
 ```bash
-python3 log_collector.py
+python3 auditor_clamav.py
 ```
 
 ```bash
-python3 auditor_clamav.py
+python3 log_collector.py
 ```
 
 ### Phase 3: Finalization & Cold Storage (`report_finisher.py`)
@@ -645,11 +645,11 @@ Pobiera logi ze zdalnej maszyny i integruje je z raportem.
 * **Aktualizacja w Miejscu:** Dołącza "Załącznik A: Spis Zawartości Logów" do istniejących raportów PDF, listując każdy przechwycony plik i jego rozmiar, zachowując strukturę dokumentu.
 
 ```bash
-python3 log_collector.py
+python3 auditor_clamav.py
 ```
 
 ```bash
-python3 auditor_clamav.py
+python3 log_collector.py
 ```
 
 ### Faza 3: Finalizacja i Zimny Magazyn (`report_finisher.py`)
