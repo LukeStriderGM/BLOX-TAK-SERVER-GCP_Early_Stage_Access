@@ -555,6 +555,10 @@ Connects to the VM via SSH and performs a deep scan of the system.
 * **Output:** Generates the initial 2-page PDF Operational Report.
 
 ```bash
+python3 install_clamav.py
+```
+
+```bash
 python3 auditor_smart.py
 ```
 
@@ -568,6 +572,10 @@ Harvests logs from the remote machine and integrates them into the report.
 
 ```bash
 python3 log_collector.py
+```
+
+```bash
+python3 auditor_clamav.py
 ```
 
 ### Phase 3: Finalization & Cold Storage (`report_finisher.py`)
@@ -621,6 +629,10 @@ Pakiet generuje jednocześnie 4 warianty PDF (EN/PL x Publiczny/Prywatny) i paku
 * **Wynik:** Generuje wstępny, 2-stronicowy Raport Operacyjny PDF.
 
 ```bash
+python3 install_clamav.py
+```
+
+```bash
 python3 auditor_smart.py
 ```
 
@@ -634,6 +646,10 @@ Pobiera logi ze zdalnej maszyny i integruje je z raportem.
 
 ```bash
 python3 log_collector.py
+```
+
+```bash
+python3 auditor_clamav.py
 ```
 
 ### Faza 3: Finalizacja i Zimny Magazyn (`report_finisher.py`)
