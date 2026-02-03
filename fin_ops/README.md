@@ -1,4 +1,4 @@
-## 🇺🇸 Version 1.0.0.1 - Automated FinOps & BigQuery Cost Tracking
+## 🇺🇸 / 🇵🇱 Version 1.0.0.1 - Automated FinOps & BigQuery Cost Tracking
 
 https://docs.google.com/spreadsheets/d/1dAM40OTxRDzltWwb_dnrfRSE98S4XxXteFhoSMBLcJE
 
