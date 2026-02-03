@@ -41,7 +41,8 @@ EXTENSIONS_TO_EXCLUDE = {
     '.png',
     '.log',
     '.tmp',
-    '.pdf'
+    '.pdf',
+    '.ttf'
 }
 
 
