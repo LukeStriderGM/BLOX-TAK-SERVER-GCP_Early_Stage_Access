@@ -1,5 +1,5 @@
-// --- GOOGLE APPS SCRIPT: COST TRACKER ---
-// --- GOOGLE APPS SCRIPT: ŚLEDZENIE KOSZTÓW ---
+// ---  GOOGLE APPS SCRIPT: COST TRACKER  ---
+// ---  GOOGLE APPS SCRIPT: ŚLEDZENIE KOSZTÓW  ---
 
 function pobierzKosztyGoogleCloud() {
   // --- CONFIGURATION ---
