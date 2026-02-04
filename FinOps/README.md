@@ -1,5 +1,6 @@
 ## 🇺🇸 / 🇵🇱 Version 1.0.0.1 - Automated FinOps & BigQuery Cost Tracking
 
+SPREADSHEET:
 https://docs.google.com/spreadsheets/d/1dAM40OTxRDzltWwb_dnrfRSE98S4XxXteFhoSMBLcJE
 
 This release integrates a serverless, maintenance-free financial operations module directly into the Google Workspace ecosystem, enabling precise, daily cost monitoring without external infrastructure.
@@ -19,6 +20,7 @@ This release integrates a serverless, maintenance-free financial operations modu
 
 ## 🇵🇱 Wersja 1.0.0.1 - Automatyczny FinOps i Śledzenie Kosztów BigQuery
 
+ARKUSZ KALKULACYJNY:
 https://docs.google.com/spreadsheets/d/1dAM40OTxRDzltWwb_dnrfRSE98S4XxXteFhoSMBLcJE
 
 To wydanie integruje bezserwerowy, bezobsługowy moduł operacji finansowych bezpośrednio z ekosystemem Google Workspace, umożliwiając precyzyjne, codzienne monitorowanie kosztów bez konieczności utrzymywania zewnętrznej infrastruktury.

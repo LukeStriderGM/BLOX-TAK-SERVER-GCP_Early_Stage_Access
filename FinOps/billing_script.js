@@ -142,15 +142,15 @@ function pobierzKosztyGoogleCloud() {
         var compareDate = new Date(rowDate);
         compareDate.setHours(0, 0, 0, 0);
 
-        // If dates match, update Column B
-        // Jeśli daty się zgadzają, zaktualizuj Kolumnę B
+        // If dates match, update Column F (Index 6)
+        // Jeśli daty się zgadzają, zaktualizuj Kolumnę F (Indeks 6)
         if (compareDate.getTime() === today.getTime()) {
-          // Update the cell (row i+1, column 2)
-          // Zaktualizuj komórkę (wiersz i+1, kolumna 2)
-          sheet.getRange(i + 1, 2).setValue(grossAmount);
+          // Update the cell (row i+1, column 6 -> F)
+          // Zaktualizuj komórkę (wiersz i+1, kolumna 6 -> F)
+          sheet.getRange(i + 1, 6).setValue(grossAmount);
 
-          Logger.log(f("📂 Spreadsheet updated successfully."));
-          Logger.log(f("📂 Arkusz zaktualizowany pomyślnie."));
+          Logger.log(f("📂 Spreadsheet updated successfully (Column F)."));
+          Logger.log(f("📂 Arkusz zaktualizowany pomyślnie (Kolumna F)."));
           found = true;
           break;
         }
