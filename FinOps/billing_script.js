@@ -41,7 +41,7 @@ function pobierzKosztyGoogleCloud() {
       FROM \`` + TABLE_NAME + `\`
       WHERE
         project.id = @projectId
-        AND DATE(usage_start_time, "Europe/Warsaw") = CURRENT_DATE("Europe/Warsaw")
+        AND usage_start_time >= TIMESTAMP(DATE_TRUNC(CURRENT_DATE("Europe/Warsaw"), MONTH))
     `;
 
     // Prepare the API request object
