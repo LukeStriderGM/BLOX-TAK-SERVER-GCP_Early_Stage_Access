@@ -327,11 +327,22 @@ python3 install_docker.py
 ### Step 4: Install TAK Server
 
 Download TAK Server Files to the VM:
-This script uses gdown on the remote server to download the necessary TAK Server zip file.
+This script uses deploy_assets.py on a remote server to download the required tak-server.zip file from GitHUB:
+ 
+https://github.com/LukeStriderGM/BLOX-TAK-SERVER-GCP_Early_Stage_Access/releases/tag/v1.0.0.3
 
 ```bash
-python3 gdown.py
+python3 deploy_assets.py
 ```
+
+The package includes a great repo of CloudRF installation scripts:
+https://github.com/Cloud-RF/tak-server
+modified for the project with the original MIT license + takserver-docker-5.7-RELEASE-8.zip.
+
+DEFAULT CONFIGURATION: Uses GitHUB assets for ease of access.
+SECURITY UPGRADE: For professional deployments and established cooperation,
+we offer a High Security setup using private Google Cloud Storage buckets.
+This ensures isolated data transfer (internal IP only) with zero public access.
 
 Run the TAK Server Setup:
 This is an interactive script that will guide you through the TAK server installation on the remote machine.
@@ -413,11 +424,22 @@ python3 install_docker.py
 ### Krok 4: Zainstaluj Serwer TAK
 
 Pobierz Pliki Serwera TAK na Maszynę Wirtualną:
-Ten skrypt używa gdown na zdalnym serwerze do pobrania wymaganego pliku zip Serwera TAK.
+Ten skrypt używa deploy_assets.py na zdalnym serwerze do pobrania wymaganego pliku tak-server.zip z GitHUB:
+
+https://github.com/LukeStriderGM/BLOX-TAK-SERVER-GCP_Early_Stage_Access/releases/tag/v1.0.0.3
 
 ```bash
-python3 gdown.py
+python3 deploy_assets.py
 ```
+
+Paczka zawiera wspaniałe repo skryptów instalacyjnych od CloudRF:
+https://github.com/Cloud-RF/tak-server
+zmodyfikowane na potrzby projektu z pierwotną licencją MIT + takserver-docker-5.7-RELEASE-8.zip.
+
+KONFIGURACJA DOMYŚLNA: Korzysta z GitHUB assets dla ułatwienia dostępu.
+UPGRADE BEZPIECZEŃSTWA: Dla wdrożeń profesjonalnych i przy nawiązaniu współpracy,
+oferujemy konfigurację High Security z użyciem prywatnych bucketów Google Cloud Storage.
+Zapewnia to izolowany transfer danych (tylko sieć wewnętrzna) bez dostępu publicznego.
 
 Uruchom Instalator Serwera TAK:
 To interaktywny skrypt, który przeprowadzi Cię przez proces instalacji serwera TAK na zdalnej maszynie.
