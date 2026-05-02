@@ -6,6 +6,7 @@ from datetime import datetime
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 
+
 # --- CONFIGURATION ---
 # --- KONFIGURACJA ---
 SERVICE_ACCOUNT_FILE = 'credentials.json'
@@ -107,6 +108,7 @@ def sync_finops_final_master():
         formula_b = f"=F{row}/$J${row}"
         formula_d = f"=F{row}/$K${row}"
         formula_h = f"=F{row}-(F{row}*0,23)"
+        val_i = "-"
 
         # Progression logic (C, E, G) - Reset to 0 on new month
         # Logika progresji (C, E, G) - Resetuj do 0 przy nowym miesiącu
@@ -133,6 +135,7 @@ def sync_finops_final_master():
         update_payload = [
             {'range': f"{sheet_ref}!A{row}:E{row}", 'values': [[today_date, formula_b, val_c, formula_d, val_e]]},
             {'range': f"{sheet_ref}!G{row}:H{row}", 'values': [[val_g, formula_h]]},
+            {'range': f"{sheet_ref}!I{row}", 'values': [[val_i]]},
             {'range': f"{sheet_ref}!J{row}:L{row}", 'values': [[formula_j, formula_k, formula_l]]}
         ]
 
