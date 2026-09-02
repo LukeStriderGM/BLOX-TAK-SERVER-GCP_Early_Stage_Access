@@ -151,32 +151,26 @@ This initial step covers everything you need to do on your **local admin machine
         pip install -r requirements.txt
         ```
 
-### Part B: GCP Firewall Configuration
+### Part B: GCP Firewall Pre-Configuration (Automated Beta)
 
-Before deploying the virtual machine, you must configure the firewall in your GCP project's VPC network to allow necessary traffic.
+Before deploying the virtual machine, you must secure your GCP project's VPC network. To simplify the process, the manual configuration has been replaced with a fully automated, Terraform-driven script (currently in Beta testing).
 
-1.  Navigate to **VPC network -> Firewall** in your Google Cloud Console.
-2.  Click **CREATE FIREWALL RULE** and create the following two rules:
+1.  **Set Your IP:** Open your `config.yaml` file and enter your local machine's public WAN IP address in the new security section:
+    ```yaml
+    GLOBAL_SETTINGS:
+      security:
+        admin_ext_ip: 'YOUR_IP/32'
+    ```
 
-#### Rule 1: Allow SSH Access from Admin IP
-* **Name**: `ssh-22`
-* **Direction of traffic**: `Ingress`
-* **Action on match**: `Allow`
-* **Targets**: `Specified target tags`
-* **Target tags**: `tak-server`
-* **Source filter**: `IPv4 ranges`
-* **Source IPv4 ranges**: `0.0.0.0/32` (Enter your own admin IP here)
-* **Protocols and ports**: `Specified protocols and ports` -> `tcp`: `22`
+2.  **Deploy Firewall Rules:** Run the automated pre-configuration script. This will create a secure perimeter, allowing SSH access strictly from your specified IP and opening the necessary UDP port for WireGuard.
+    ```bash
+    python3 configure_firewall.py
+    ```
 
-#### Rule 2: Allow WireGuard VPN Traffic
-* **Name**: `wire-guard`
-* **Direction of traffic**: `Ingress`
-* **Action on match**: `Allow`
-* **Targets**: `Specified target tags`
-* **Target tags**: `tak-server`
-* **Source filter**: `IPv4 ranges`
-* **Source IPv4 ranges**: `0.0.0.0/0`
-* **Protocols and ports**: `Specified protocols and ports` -> `udp`: `51820`
+*(Optional Maintenance)* If you ever need to remove these firewall rules automatically, you can run:
+```bash
+python3 destroy_firewall.py
+```
 
 <details>
 <summary>🇵🇱</summary>
@@ -241,32 +235,26 @@ Ten początkowy krok obejmuje wszystko, co musisz zrobić na swojej **lokalnej m
         pip install -r requirements.txt
         ```
 
-### Część B: Konfiguracja Reguł Zapory Sieciowej GCP
+### Część B: Pre-Konfiguracja Zapory Sieciowej GCP (Zautomatyzowana Wersja Testowa)
 
-Przed wdrożeniem maszyny wirtualnej musisz skonfigurować zaporę sieciową (firewall) w sieci VPC swojego projektu GCP, aby zezwolić na niezbędny ruch.
+Przed wdrożeniem maszyny wirtualnej musisz zabezpieczyć sieć VPC swojego projektu GCP. Aby uprościć ten proces, ręczna konfiguracja została zastąpiona w pełni zautomatyzowanym skryptem opartym na Terraform (obecnie w fazie testów Beta).
 
-1.  W konsoli Google Cloud przejdź do **Sieć VPC -> Zapora sieciowa**.
-2.  Kliknij **UTWÓRZ REGUŁĘ ZAPORY SIECIOWEJ** i utwórz dwie poniższe reguły:
+1.  **Ustaw Swój Adres IP:** Otwórz plik `config.yaml` i wprowadź publiczny adres IP (WAN) swojej lokalnej maszyny w nowej sekcji bezpieczeństwa:
+    ```yaml
+    GLOBAL_SETTINGS:
+      security:
+        admin_ext_ip: 'TWÓJ_IP/32'
+    ```
 
-#### Reguła 1: Zezwól na Dostęp SSH z Adresu IP Administratora
-* **Nazwa**: `ssh-22`
-* **Kierunek ruchu**: `Przychodzący`
-* **Działanie w przypadku dopasowania**: `Zezwalaj`
-* **Cele**: `Określone tagi docelowe`
-* **Tagi docelowe**: `tak-server`
-* **Filtr źródłowy**: `Zakresy IPv4`
-* **Źródłowe zakresy IPv4**: `0.0.0.0/32` (Wprowadź tutaj własny adres IP administratora)
-* **Protokoły i porty**: `Określone protokoły i porty` -> `tcp`: `22`
+2.  **Wdróż Reguły Zapory:** Uruchom zautomatyzowany skrypt pre-konfiguracji. Utworzy on bezpieczny obwód, zezwalając na dostęp SSH rygorystycznie i wyłącznie z podanego przez Ciebie adresu IP oraz otwierając niezbędny port UDP dla WireGuard.
+    ```bash
+    python3 configure_firewall.py
+    ```
 
-#### Reguła 2: Zezwól na Ruch VPN WireGuard
-* **Nazwa**: `wire-guard`
-* **Kierunek ruchu**: `Przychodzący`
-* **Działanie w przypadku dopasowania**: `Zezwalaj`
-* **Cele**: `Określone tagi docelowe`
-* **Tagi docelowe**: `tak-server`
-* **Filtr źródłowy**: `Zakresy IPv4`
-* **Źródłowe zakresy IPv4**: `0.0.0.0/0`
-* **Protokoły i porty**: `Określone protokoły i porty` -> `udp`: `51820`
+*(Opcjonalna Konserwacja)* Jeśli kiedykolwiek będziesz musiał automatycznie usunąć te reguły zapory sieciowej, możesz użyć polecenia:
+```bash
+python3 destroy_firewall.py
+```
 
 </details>
 
