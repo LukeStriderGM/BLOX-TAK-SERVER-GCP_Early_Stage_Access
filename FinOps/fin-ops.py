@@ -108,7 +108,7 @@ def sync_finops_final_master():
         formula_b = f"=F{row}/$J${row}"
         formula_d = f"=F{row}/$K${row}"
         formula_h = f"=F{row}-(F{row}*0,23)"
-        val_i = "-"
+        val_i = "Promotional Credits - Kredyty Promocyjne"
 
         # Progression logic (C, E, G) - Reset to 0 on new month
         # Logika progresji (C, E, G) - Resetuj do 0 przy nowym miesiącu

@@ -1,123 +1,117 @@
-import sys
+# --- IMPORTS ---
+# --- IMPORTY ---
 import os
+import sys
 import yaml
 from google.oauth2 import service_account
 from google.cloud import bigquery
 from googleapiclient.discovery import build
 
-
 # --- CONFIGURATION ---
 # --- KONFIGURACJA ---
 SERVICE_ACCOUNT_FILE = 'credentials.json'
-SPREADSHEET_ID = '1dAM40OTxRDzltWwb_dnrfRSE98S4XxXteFhoSMBLcJE'
 CONFIG_FILE = 'config.yaml'
-# Scopes for Sheets and BigQuery
-# Zakresy dla Arkuszy i BigQuery
+SPREADSHEET_ID = '1dAM40OTxRDzltWwb_dnrfRSE98S4XxXteFhoSMBLcJE'
+
+BQ_CLIENT_PROJECT = 'blox-tak-support-506512'
+TARGET_COST_PROJECT = 'blox-tak-int'
+BQ_TABLE = 'blox-tak-support-506512.billing_data.gcp_billing_export_v1_01DD0A_C0EEF2_052566'
+
 SCOPES = [
-    'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/cloud-platform'
+    'https://www.googleapis.com/auth/cloud-platform',
+    'https://www.googleapis.com/auth/spreadsheets'
 ]
 
-# GCP Billing Details
-# Szczegóły bilingu GCP
-GCP_PROJECT_ID = 'blox-tak-server'
-BQ_TABLE = 'blox-tak-gemini-467013.billing_data.gcp_billing_export_v1_013118_62714A_101995'
 
-
-# --- FILE OPERATIONS ---
-# --- OPERACJE NA PLIKACH ---
-
-def load_config():
-    # Load current row from YAML
-    # Załaduj bieżący wiersz z YAML
-    with open(CONFIG_FILE, 'r') as file:
-        return yaml.safe_load(file)
-
-
-# --- MAIN LOGIC ---
-# --- GŁÓWNA LOGIKA ---
-
-def update_gcp_cost_column_f():
-    # Validate system files
-    # Walidacja plików systemowych
+def get_and_inject_cost():
+    # Verify system files exist
+    # Sprawdź czy istnieją pliki systemowe
     if not os.path.exists(SERVICE_ACCOUNT_FILE) or not os.path.exists(CONFIG_FILE):
-        print(f"🔴 Critical: Required files missing!")
-        print(f"🔴 Krytyczne: Brak wymaganych plików!")
+        print(f"🔴 Critical Error: Missing system files!", file=sys.stderr)
+        print(f"🔴 Krytyczny błąd: Brak plików systemowych!", file=sys.stderr)
         sys.exit(1)
 
     try:
-        # Load configuration
-        # Załaduj konfigurację
-        config = load_config()
+        # Load config to find the current row and sheet name
+        # Załaduj konfigurację, aby znaleźć obecny wiersz i nazwę arkusza
+        with open(CONFIG_FILE, 'r') as file:
+            config = yaml.safe_load(file)
         row = config['last_row']
         sheet_name = config['sheet_name']
 
-        # Initialize Google Services
-        # Inicjalizacja usług Google
-        creds = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-        bq_client = bigquery.Client(credentials=creds, project=GCP_PROJECT_ID)
+        # Authenticate Google Cloud and Google Sheets
+        # Autoryzuj Google Cloud i Google Sheets
+        creds = service_account.Credentials.from_service_account_file(
+            SERVICE_ACCOUNT_FILE, scopes=SCOPES
+        )
+        bq_client = bigquery.Client(credentials=creds, project=BQ_CLIENT_PROJECT)
         sheets_service = build('sheets', 'v4', credentials=creds)
 
-        # --- STEP 1: QUERY BIGQUERY ---
-        # --- KROK 1: ZAPYTANIE BIGQUERY ---
+        # --- STEP 1: FETCH COST FROM BIGQUERY ---
+        # --- KROK 1: POBIERZ KOSZT Z BIGQUERY ---
 
-        print(f"🔄 Fetching costs for row {row} from BigQuery...")
-        print(f"🔄 Pobieranie kosztów dla wiersza {row} z BigQuery...")
-
-        # Sum net costs for the current month
-        # Sumuj koszty netto dla bieżącego miesiąca
+        # SQL Query: Fetching RAW burned costs
+        # Zapytanie SQL: Pobieranie SUROWYCH przepalonych kosztów
         sql = f"""
             SELECT
-                SUM(cost) + SUM(IFNULL((SELECT SUM(c.amount) FROM UNNEST(credits) c), 0)) as cost_netto
+                SUM(cost) as raw_cost
             FROM `{BQ_TABLE}`
             WHERE
                 project.id = @projectId
                 AND usage_start_time >= TIMESTAMP(DATE_TRUNC(CURRENT_DATE("Europe/Warsaw"), MONTH))
         """
 
+        # Execute SQL query
+        # Wykonaj zapytanie SQL
         job_config = bigquery.QueryJobConfig(
             query_parameters=[
-                bigquery.ScalarQueryParameter("projectId", "STRING", GCP_PROJECT_ID)
+                bigquery.ScalarQueryParameter("projectId", "STRING", TARGET_COST_PROJECT)
             ]
         )
-
         query_job = bq_client.query(sql, job_config=job_config)
         results = query_job.result()
 
-        net_amount = 0.0
-        for bq_row in results:
-            if bq_row.cost_netto is not None:
-                net_amount = float(bq_row.cost_netto)
+        # Process results and calculate VAT
+        # Przetwórz wyniki i oblicz VAT
+        raw_amount = 0.0
+        for db_row in results:
+            if db_row.raw_cost is not None:
+                raw_amount = float(db_row.raw_cost)
 
-        # Apply 23% VAT and round to 2 decimals
-        # Nałóż 23% VAT i zaokrąglij do 2 miejsc po przecinku
-        gross_amount = round(net_amount * 1.23, 2)
+        gross_amount = round(raw_amount * 1.23, 2)
 
-        # --- STEP 2: UPDATE COLUMN F ---
-        # --- KROK 2: AKTUALIZACJA KOLUMNY F ---
+        print(f"🔄 GCP Cost calculated: {gross_amount} PLN")
+        print(f"🔄 Koszt GCP obliczony: {gross_amount} PLN")
 
-        target_cell = f"'{sheet_name}'!F{row}"
+        # --- STEP 2: INJECT COST INTO SHEET (COLUMN F) ---
+        # --- KROK 2: WSTRZYKNIJ KOSZT DO ARKUSZA (KOLUMNA F) ---
 
-        print(f"🔄 Writing {gross_amount} to {target_cell}...")
-        print(f"🔄 Zapisywanie {gross_amount} do {target_cell}...")
-
+        # Prepare the update payload for column F
+        # Przygotuj pakiet aktualizacji dla kolumny F
+        sheet_ref = f"'{sheet_name}'!F{row}"
         body = {'values': [[gross_amount]]}
 
+        # Update Google Sheet
+        # Zaktualizuj Arkusz Google
         sheets_service.spreadsheets().values().update(
             spreadsheetId=SPREADSHEET_ID,
-            range=target_cell,
+            range=sheet_ref,
             valueInputOption='USER_ENTERED',
             body=body
         ).execute()
 
-        print(f"✅ Column F updated successfully.")
-        print(f"✅ Kolumna F zaktualizowana pomyślnie.")
+        print(f"✅ Success! Cost {gross_amount} injected into {sheet_ref}")
+        print(f"✅ Sukces! Koszt {gross_amount} wstrzyknięty do {sheet_ref}")
 
     except Exception as e:
-        print(f"❌ Error during GCP sync: {e}")
-        print(f"❌ Błąd podczas synchronizacji GCP: {e}")
+        # Handle errors gracefully
+        # Obsłuż błędy z gracją
+        print(f"❌ Critical Error: {e}", file=sys.stderr)
+        print(f"❌ Krytyczny błąd: {e}", file=sys.stderr)
         sys.exit(1)
 
 
 if __name__ == "__main__":
-    update_gcp_cost_column_f()
+    # Execute the injection process
+    # Uruchom proces wstrzykiwania
+    get_and_inject_cost()
